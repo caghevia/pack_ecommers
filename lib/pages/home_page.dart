@@ -1,4 +1,6 @@
 import 'package:pack_ecommers/blocs/categories_bloc.dart';
+import 'package:pack_ecommers/blocs/products_bloc.dart';
+import 'package:pack_ecommers/models/category.dart';
 import 'package:pack_ecommers/models/product.dart';
 import 'package:pack_ecommers/pages/selected_category_page.dart';
 import 'package:pack_ecommers/widgets/bloc_provider.dart';
@@ -13,7 +15,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('E-Commerce'),
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<List<Category>>(
         stream: _categoriesBloc.outCategories,
         builder: (context, categories) {
           if (categories.hasData) {
@@ -23,12 +25,9 @@ class MyHomePage extends StatelessWidget {
                 return ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => SelectedCategoryPage(
-                        products: [
-                          Product.create('product'),
-                          Product.create('product'),
-                          Product.create('product'),
-                        ],
+                      builder: (context) => BlocProvider(
+                        bloc: ProductsBloc(categories.data[index]),
+                        child: SelectedCategoryPage(),
                       ),
                     ),
                   ),
