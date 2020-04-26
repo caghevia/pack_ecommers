@@ -13,6 +13,10 @@ class CartBloc extends BlocBase {
   Cart _cart;
   Cart get cart => _cart;
 
+  // final _cartController = BehaviorSubject<Cart>();
+  // Stream<Cart> get outCart => _cartController.stream;
+  // Sink<Cart> get _inCart => _cartController.sink;
+
   final _productsController = BehaviorSubject<List<Product>>();
   Stream<List<Product>> get outProducts => _productsController.stream;
   Sink<List<Product>> get _inProducts => _productsController.sink;
@@ -23,6 +27,7 @@ class CartBloc extends BlocBase {
 
   @override
   void dispose() {
+    //_cartController.close();
     _productsController.close();
     _countController.close();
   }
